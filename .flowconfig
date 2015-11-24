@@ -1,0 +1,11 @@
+[ignore]
+.*/node_modules/babel.*
+.*/node_modules/fbjs/.*
+.*/node_modules/react/lib/.*
+.*/node_modules/babylon.*
+
+[include]
+
+[libs]
+
+[options]
