@@ -1,3 +1,45 @@
-body
-  background-color: black;
-  color: white;
+@charset 'UTF-8'
+
+//-------------------------------
+// Settings
+//-------------------------------
+
+@import 'normalize.css/normalize.css'
+@import 'zenigame/src/zenigame'
+
+//-------------------------------
+// Constants
+//-------------------------------
+
+
+//-------------------------------
+// Base
+//-------------------------------
+
+html, body
+  minsize(100%, 100%)
+  typo($default-font-size, $gray900, 300, $default-line-height)
+  size(100%)
+  font-family: 'Noto Sans Japanese', $font
+  letter-spacing: 0.04em
+  overflow: hidden
+
+a
+  &:link
+    color: $blue500
+  &:visited
+    color: $blue700
+  &:hover
+    color: $blue900
+  &:active
+    color: $blue900
+
+//-------------------------------
+// Common
+//-------------------------------
+
+
+//-------------------------------
+// Components
+//-------------------------------
+
