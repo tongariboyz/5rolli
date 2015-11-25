@@ -8,12 +8,14 @@
   },
   "dependencies": {
     "dacho": "^1.0.0",
+    "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.0",
-    "redux-thunk": "^1.0.0"
+    "redux-thunk": "^1.0.0",
+    "zenigame": "0.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
