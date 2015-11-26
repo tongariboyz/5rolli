@@ -18,6 +18,7 @@ export default class App extends React.Component {
         <Header />
         <div className="Main">
           <IssueListView />
+          <div className="StoryView"></div>
         </div>
       </div>
     );
