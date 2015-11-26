@@ -5,9 +5,9 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import App from './containers/App';
-import story from './reducers/story';
+import rootReducer from './reducers/rootReducer';
 
-const store = createStore(story);
+const store = createStore(rootReducer);
 
 window.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('app');
