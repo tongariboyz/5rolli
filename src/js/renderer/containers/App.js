@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import Header from '../components/Header';
+import IssueListView from '../containers/IssueListView';
 
 
 /**
@@ -12,6 +13,13 @@ export default class App extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
-    return <Header />;
+    return (
+      <div className="Wrapper">
+        <Header />
+        <div className="Main">
+          <IssueListView />
+        </div>
+      </div>
+    );
   }
 }

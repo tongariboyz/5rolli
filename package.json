@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "dacho": "^1.0.0",
-    "nbem": "^0.1.0",
+    "nbem": "^0.1.1",
     "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
