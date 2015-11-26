@@ -8,12 +8,15 @@
   },
   "dependencies": {
     "dacho": "^1.0.0",
+    "nbem": "^0.1.0",
+    "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.0",
-    "redux-thunk": "^1.0.0"
+    "redux-thunk": "^1.0.0",
+    "zenigame": "0.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
@@ -27,6 +30,7 @@
     "chokidar-cli": "^1.2.0",
     "clear-require": "^1.0.1",
     "codecov.io": "^0.1.6",
+    "cpx": "^1.2.1",
     "electron-packager": "^5.1.1",
     "electron-prebuilt": "^0.35.1",
     "esdoc": "^0.4.3",
@@ -60,7 +64,9 @@
   "scripts": {
     "app": "electron --debug=5858 dist/main.js",
     "build": "npm-aun-all --parallel build:*",
-    "build:css": "stylus -c src/styles/base.styl -o dist/bundle.css -m --sourcemap-root stylus",
+    "build:css": "stylus -c src/styles/base.styl --include-css -I node_modules -o dist/bundle.css -m --sourcemap-root stylus",
+    "build:fonts": "cpx \"src/fonts/**/{*.eot,*.svg,*.ttf,*.woff}\" dist/fonts",
+    "build:images": "cpx \"src/images/**/{*.svg,*.gif,*.png,*.jpg}\" dist/images",
     "build:js-main": "browserify -t babelify src/js/main/main.js --im --no-detect-globals --node -d | exorcist ./dist/main.js.map > ./dist/main.js",
     "build:js-renderer": "browserify -t babelify src/js/renderer/app.js -d | exorcist ./dist/bundle.js.map > ./dist/bundle.js",
     "codecov": "cat coverage/lcov.info | codecov",
@@ -78,8 +84,10 @@
     "test": "npm-run-all lint test:coverage",
     "test:coverage": "babel-node $(npm bin)/isparta cover --report text --report html --report lcovonly _mocha -- test/**/*spec.js",
     "watch": "npm-run-all --parallel watch:*",
-    "watch:css": "stylus -c -w src/styles/base.styl -o dist/bundle.css -m --sourcemap-root ./stylus",
+    "watch:css": "stylus -c -w src/styles/base.styl --include-css -I node_modules -o dist/bundle.css -m --sourcemap-root ./stylus",
     "watch:flow": "flow & chokidar src/js/ -c flow",
+    "watch:fonts": "cpx \"src/fonts/**/{*.eot,*.svg,*.ttf,*.woff}\" dist/fonts --watch",
+    "watch:images": "cpx \"src/images/**/{*.svg,*.gif,*.png,*.jpg}\" dist/images --watch",
     "watch:jade": "jade src --watch --out dist",
     "watch:js-main": "watchify -v -t babelify ./src/js/main/main.js --im --no-detect-globals --node -o \"exorcist ./dist/main.js.map > ./dist/main.js\" -d",
     "watch:js-renderer": "watchify -v -t babelify src/js/renderer/app.js -o \"exorcist dist/bundle.js.map > ./dist/bundle.js\" -d",
