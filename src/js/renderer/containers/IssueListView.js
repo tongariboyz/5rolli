@@ -31,7 +31,7 @@ class IssueListView extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
-    return <div className="IssueLiseView">{this.renderIssues()}</div>;
+    return <div className="IssueListView">{this.renderIssues()}</div>;
   }
 }
 

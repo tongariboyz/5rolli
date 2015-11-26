@@ -20,8 +20,8 @@
 
 html, body
   minsize(100%, 100%)
-  typo($default-font-size, $gray900, 300, $default-line-height)
   size(100%)
+  typo($default-font-size, $gray900, 300, $default-line-height)
   font-family: 'Noto Sans Japanese', $font
   letter-spacing: 0.04em
   overflow: hidden
@@ -40,6 +40,9 @@ a
 // Common
 //-------------------------------
 
+#app, .Wrapper
+  size(100%)
+  overflow: scroll
 
 //-------------------------------
 // Components
@@ -47,3 +50,4 @@ a
 
 @import 'components/_Header'
 @import 'components/_Issue'
+@import 'components/_Main'
