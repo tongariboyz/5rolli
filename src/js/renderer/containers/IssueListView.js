@@ -12,7 +12,7 @@ class IssueListView extends React.Component {
   /**
    * render Issues
    *
-   * @return {ReactElement}
+   * @return {ReactElement[]}
    */
   renderIssues(): React.Element {
     return this.props.story.issues.map((issue, key) => {
