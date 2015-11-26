@@ -2,6 +2,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import IssueListView from '../containers/IssueListView';
+import StoryView from '../containers/StoryView';
 
 
 /**
@@ -18,7 +19,7 @@ export default class App extends React.Component {
         <Header />
         <div className="Main">
           <IssueListView />
-          <div className="StoryView"></div>
+          <StoryView />
         </div>
       </div>
     );
