@@ -1,0 +1,93 @@
+.StoryWrapper
+  size(100%, auto)
+  box-sizing: border-box
+
+
+.Story
+  size(100%, auto)
+  box-sizing: border-box
+  cursor: pointer
+  display: flex
+  padding: 16px
+  &:hover
+    background: $gray50
+  &:active
+    background: $gray100
+  &.is-open
+    &.is-current
+      .Story__status
+        border-color: $aqua500
+    &.is-past
+      .Story__status
+        border-color: $orange500
+    .Story__status
+      background: $brown800
+      color: #fff
+  &.is-close
+    .Story__status
+      background: $orange500
+      color: #fff
+    .Story__content__title
+      color: $orange500
+  &.is-wait
+    &.is-current, &.is-past
+      .Story__status
+        border(3px, solid, null, 8px)
+        margin: 0
+    &.is-current
+      .Story__status
+        border-color: $aqua500
+    &.is-past
+      .Story__status
+        border-color: $orange500
+    .Story__status
+      border(1px, solid, $brown100, 4px)
+      background: #fff
+      color: $brown100
+      margin: 2px
+    .Story__content
+      .MemberList
+        opacity(.24)
+      &__data
+        &__listName, &__time
+          color: $brown100
+      &__title
+        color: $brown100
+  &__status
+    border(3px, solid, #fff, 8px)
+    size(48px)
+    &__label
+      typo(10px, null, 500, 48px)
+      text-align: center
+      margin: 0
+  &__content
+    box-sizing: border-box
+    flex: 1
+    padding: 3px 8px
+    p
+      margin: 0
+    &__data
+      display: flex
+      &__listName
+        typo(10px, $brown300, 200, 22px)
+        padding: 0 12px 0 0
+      &__time
+        typo(10px, $brown300, 200, 22px)
+    &__title
+      typo(13px, $brown800, 300)
+
+
+.NestStory
+  padding: 0 0 0 40px
+  .StoryWrapper
+    border(0 0 0 4px, solid, $gray100)
+    padding: 0 0 0 16px
+
+
+.MemberList
+  padding: 0 12px 0 0
+  &__item
+    &__thumb
+      border-radius(4px)
+      size(22px)
+
