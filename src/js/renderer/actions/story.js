@@ -1,15 +1,6 @@
 /* @flow */
 import types from '../constants/storyActionTypes';
-
-type Action = {
-  type: string,
-  meta: {
-    client: {
-      type: string,
-      next: Function
-    }
-  }
-};
+import type {Action} from '../flowtypes';
 
 
 /**
