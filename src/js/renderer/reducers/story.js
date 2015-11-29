@@ -156,7 +156,23 @@ export default function story(state: State = {
       title: 'Story 2',
       url: 'https://google.co.jp'
     }
-  ]
+  ],
+  userSummary: [{
+    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
+    result: 0,
+    es50: 400,
+    es90: 1000
+  }, {
+    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
+    result: 0,
+    es50: 400,
+    es90: 1000
+  }, {
+    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
+    result: 0,
+    es50: 400,
+    es90: 1000
+  }]
 }, action: Action): State {
   switch (action.type) {
   case actionTypes.FETCH_STORIES:
