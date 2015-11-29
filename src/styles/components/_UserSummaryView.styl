@@ -1,0 +1,37 @@
+.UserSummaryView
+  border(0 0 1px 0, solid, $gray100)
+  display: flex
+  margin: 0 24px
+  padding: 24px 0
+
+.UserSummary
+  display: flex
+  padding: 4px
+  flex: 1
+  &__user
+    size(32px)
+    padding: 0 8px 0 0
+    &__thumb
+      border-radius(4px)
+      size(32px)
+  &__content
+    size(auto, 32px)
+    position: relative
+    &__time
+      pos(absolute, null, 0, 0)
+      typo(13px, $brown800, 400)
+      p
+        margin: 0
+      &__result, &__es50, &__es90
+        padding: 0 4px
+        position: relative
+      &__result
+        font-weight: 700
+      &__es50::before
+        pos(absolute, -14px, 4px)
+        typo(10px, $brown100, 200)
+        content: '50%'
+      &__es90::before
+        pos(absolute, -14px, 4px)
+        typo(10px, $brown100, 200)
+        content: '90%'
