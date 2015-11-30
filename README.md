@@ -1,4 +1,4 @@
-# 5ROLLI
+![5ROLLI](./logo.png)
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][codecov-image]][codecov-url]
