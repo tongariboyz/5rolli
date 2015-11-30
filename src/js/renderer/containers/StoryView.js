@@ -2,6 +2,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Story from '../components/Story';
+import UserSummaryView from '../components/UserSummaryView';
 
 const propTypes = {
   story: PropTypes.object.isRequired
@@ -36,7 +37,12 @@ class StoryView extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
-    return <div className="StoryView">{this.renderStories(this.props.story.stories)}</div>;
+    return (
+      <div className="StoryView">
+        <UserSummaryView userSummary={this.props.story.userSummary} />
+        {this.renderStories(this.props.story.stories)}
+      </div>
+    );
   }
 }
 
