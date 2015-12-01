@@ -9,8 +9,7 @@ type State = {
   isConnecting: boolean,
   invalids: InvalidStory[],
   issues: Issue[],
-  stories: Story[],
-  memberSumamry: MemberSummary[]
+  memberSummary: MemberSummary[]
 };
 
 
@@ -79,20 +78,24 @@ export default function story(state: State = {
   isConnecting: false,
   issues: [],
   invalids: [],
-  stories: [],
   memberSummary: []
 }, action: Action): State {
   switch (action.type) {
+  case actionTypes.LOGIN:
+    return Object.assign({}, state, {
+      client: action.payload
+    });
   case actionTypes.FETCH_STORIES:
     return Object.assign({}, state, {
-      client: action.payload,
       isConnecting: true
     });
   case actionTypes.RECEIVE_STORIES:
+    if (action.error) {
+      return Object.assign({}, state, {client: null, isConnecting: false});
+    }
     return Object.assign({}, state, {
-      stories: this.createStoryTree(action.payload),
       isConnecting: false
-    });
+    }, createStoryTree(((action.payload: any): StoryNode[])));
   default:
     break;
   }
