@@ -7,6 +7,7 @@ import type {Action, Issue, Story, StoryNode, InvalidStory, MemberSummary} from 
 type State = {
   client: ?StoryClient,
   isConnecting: boolean,
+  isInitialised: boolean,
   invalids: InvalidStory[],
   issues: Issue[],
   memberSummary: MemberSummary[]
@@ -76,6 +77,7 @@ export function createStoryTree(flatStories: StoryNode[]): {
 export default function story(state: State = {
   client: null,
   isConnecting: false,
+  isInitialised: false,
   issues: [],
   invalids: [],
   memberSummary: []
@@ -94,7 +96,8 @@ export default function story(state: State = {
       return Object.assign({}, state, {client: null, isConnecting: false});
     }
     return Object.assign({}, state, {
-      isConnecting: false
+      isConnecting: false,
+      isInitialised: true
     }, createStoryTree(((action.payload: any): StoryNode[])));
   default:
     break;
