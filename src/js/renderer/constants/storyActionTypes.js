@@ -6,7 +6,10 @@ import reaction from 'dacho';
  */
 const storyActionTypes: {[type: string]: string} = reaction([
   'FETCH_STORIES',
-  'RECEIVE_STORIES'
+  'RECEIVE_STORIES',
+  'LOGIN',
+  'INIT',
+  'LOAD_CONFIG'
 ], 'STORY/');
 
 export default storyActionTypes;
