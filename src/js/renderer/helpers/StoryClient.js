@@ -124,7 +124,7 @@ export default class StoryClient {
     const list = board.lists.find(l => l.id === card.idList);
     const override = {
       members,
-      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : story.status,
+      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : STORY_STATUS.close,
       card: {
         labels,
         url: card.shortUrl,
