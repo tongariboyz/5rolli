@@ -1,3 +1,5 @@
+import {window} from './browser-depends';
+
 /**
  * Create IPC Wrapper
  *
@@ -10,4 +12,5 @@ function createIPC() {
     send: (name, args) => ipcRenderer.send(name, args)
   };
 }
+
 export default createIPC();
