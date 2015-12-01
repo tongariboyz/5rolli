@@ -1,14 +1,70 @@
 /* @flow */
+import StoryClient from '../helpers/StoryClient';
+import {STORY_TYPE} from '../constants/story';
 import actionTypes from '../constants/storyActionTypes';
+import type {Action, Issue, Story, StoryNode, InvalidStory, MemberSummary} from '../flowtypes';
 
 type State = {
-  stories: any[]
+  client: ?StoryClient,
+  isConnecting: boolean,
+  invalids: InvalidStory[],
+  issues: Issue[],
+  stories: Story[],
+  memberSumamry: MemberSummary[]
 };
-type Action = {
-  type: string,
-  payload: any,
-  meta: ?any
-};
+
+
+/**
+ * Story, Issueにchildrenツリーを付与して返す
+ *
+ * @param {Object} parent Story or Issue
+ * @param {Object} childMap parentIdをキーとしたStoryリスト
+ * @return {Object}
+ */
+function parseStoryChildren(parent: Story|Issue, childMap: {[key: number]: Story[]}) {
+  const stories = childMap[parent.id] || [];
+  const children = stories.map(child => {
+    return parseStoryChildren(child, childMap);
+  });
+  return Object.assign({}, parent, {children});
+}
+
+
+/**
+ * Story
+ *
+ * @param {Object[]} flatStories storyリスト
+ * @return {Object[]}
+ */
+export function createStoryTree(flatStories: StoryNode[]): {
+  issues: Issue[],
+  invalids: InvalidStory[]
+} {
+  const issues: Issue[] = [];
+  const invalids: InvalidStory[] = [];
+  const storyMap: {[key: number]: Story[]} = {};
+
+  flatStories.sort((a, b) => {
+    return a.card.pos - b.card.pos;
+  }).forEach(s => {
+    if (s.type === STORY_TYPE.issue) {
+      issues.push(((s: any): Issue));
+    } else if (s.type === STORY_TYPE.invalid) {
+      invalids.push(((s: any): InvalidStory));
+    } else {
+      const key = ((s: any): Story).parentId;
+      if (!storyMap[key]) {
+        storyMap[key] = [];
+      }
+      storyMap[key].push(((s: any): Story));
+    }
+  });
+  return {
+    invalids,
+    issues: issues.map(issue => {
+      return parseStoryChildren(issue, storyMap);
+    })};
+}
 
 
 /**
@@ -19,164 +75,24 @@ type Action = {
  * @return {Object}
  */
 export default function story(state: State = {
-  issues: [
-    {
-      id: '1',
-      summary: {
-        current: 2,
-        past: 1,
-        open: 2,
-        close: 2,
-        wait: 2
-      },
-      title: 'Issue 1'
-    }, {
-      id: '2',
-      summary: {
-        current: 0,
-        past: 0,
-        open: 2,
-        close: 0,
-        wait: 5
-      },
-      title: 'Issue 2'
-    }
-  ],
-  stories: [
-    {
-      children: [{
-        children: [{
-          children: [{
-            children: [],
-            id: '14',
-            listName: 'Sprint.1 (20151130)',
-            members: [{
-              imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-            }],
-            sprintStatus: 'current', // current, past, future
-            storyStatus: 'close', // open, close, wait
-            time: {
-              result: 0,
-              val50: 80,
-              val90: 180
-            },
-            title: 'Great-Grandson Story 1',
-            url: 'https://google.co.jp'
-          }, {
-            children: [],
-            id: '15',
-            listName: 'Sprint.1 (20151130)',
-            members: [{
-              imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-            }],
-            sprintStatus: 'current', // current, past, future
-            storyStatus: 'open', // open, close, wait
-            time: {
-              result: 0,
-              val50: 80,
-              val90: 180
-            },
-            title: 'Great-Grandson Story 2',
-            url: 'https://google.co.jp'
-          }],
-          id: '13',
-          listName: 'Sprint.1 (20151130)',
-          members: [{
-            imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-          }],
-          sprintStatus: 'future', // current, past, future
-          storyStatus: 'open', // open, close, wait
-          time: {
-            result: 0,
-            val50: 80,
-            val90: 180
-          },
-          title: 'Grandson Story 1',
-          url: 'https://google.co.jp'
-        }],
-        id: '12',
-        listName: 'Sprint.1 (20151130)',
-        members: [{
-          imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-        }],
-        sprintStatus: 'future', // current, past, future
-        storyStatus: 'open', // open, close, wait
-        time: {
-          result: 0,
-          val50: 80,
-          val90: 180
-        },
-        title: 'Child Story 1',
-        url: 'https://google.co.jp'
-      }, {
-        children: [],
-        id: '16',
-        listName: 'Sprint.1 (20151130)',
-        members: [{
-          imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-        }],
-        sprintStatus: 'future', // current, past, future
-        storyStatus: 'wait', // open, close, wait
-        time: {
-          result: 0,
-          val50: 80,
-          val90: 180
-        },
-        title: 'Child Story 2',
-        url: 'https://google.co.jp'
-      }],
-      id: '10',
-      listName: 'Sprint.1 (20151130)',
-      members: [{
-        imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-      }],
-      sprintStatus: 'future', // current, past, future
-      storyStatus: 'open', // open, close, wait
-      time: {
-        result: 0,
-        val50: 80,
-        val90: 180
-      },
-      title: 'Story 1',
-      url: 'https://google.co.jp'
-    }, {
-      children: [],
-      id: '11',
-      listName: 'Sprint.1 (20151130)',
-      members: [{
-        imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png'
-      }],
-      sprintStatus: 'current', // current, past, future
-      storyStatus: 'open', // open, close, wait
-      time: {
-        result: 0,
-        val50: 80,
-        val90: 180
-      },
-      title: 'Story 2',
-      url: 'https://google.co.jp'
-    }
-  ],
-  userSummary: [{
-    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
-    result: 0,
-    es50: 400,
-    es90: 1000
-  }, {
-    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
-    result: 0,
-    es50: 400,
-    es90: 1000
-  }, {
-    imagePath: 'https://pbs.twimg.com/profile_images/506354953082773504/iREqhHol.png',
-    result: 0,
-    es50: 400,
-    es90: 1000
-  }]
+  client: null,
+  isConnecting: false,
+  issues: [],
+  invalids: [],
+  stories: [],
+  memberSummary: []
 }, action: Action): State {
   switch (action.type) {
   case actionTypes.FETCH_STORIES:
-    return state;
+    return Object.assign({}, state, {
+      client: action.payload,
+      isConnecting: true
+    });
+  case actionTypes.RECEIVE_STORIES:
+    return Object.assign({}, state, {
+      stories: this.createStoryTree(action.payload),
+      isConnecting: false
+    });
   default:
     break;
   }
