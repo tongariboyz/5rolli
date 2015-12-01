@@ -37,10 +37,12 @@ class StoryView extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
+    const {story} = this.props;
+    const currentIssue = story.issues.find(i => i.id === story.index);
     return (
       <div className="StoryView">
-        <MemberSummaryView memberSummary={this.props.story.memberSummary} />
-        {this.renderStories(this.props.story.stories)}
+        <MemberSummaryView memberSummary={story.memberSummary} />
+        {this.renderStories(currentIssue.children)}
       </div>
     );
   }
