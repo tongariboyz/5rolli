@@ -72,6 +72,13 @@ export default class StoryClient {
       });
     }
     return Object.assign({}, baseStory, {
+      summary: {
+        current: 0,
+        past: 0,
+        open: 0,
+        close: 0,
+        wait: 0
+      },
       type: STORY_TYPE.issue
     });
   }
