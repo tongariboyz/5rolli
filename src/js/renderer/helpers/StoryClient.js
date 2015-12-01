@@ -6,7 +6,7 @@ import request from 'superagent';
 import {STORY_TYPE, STORY_STATUS} from '../constants/story';
 import type {StoryNode, Sprint} from '../flowtypes';
 
-const NAME_BASE_REGEX = /^(\d+):\s+(?:\((?:(\d+)\/)?(\d+)\/(\d+)\)\s+)(.*)$/;
+const NAME_BASE_REGEX = /^(\d+):\s+(?:\((?:(\d+)\/)?(\d+)\/(\d+)\)\s+)?(.*)$/;
 const API_ENDPOINT = 'https://api.trello.com';
 const AVATAR_ENDPOINT = 'https://trello-avatars.s3.amazonaws.com';
 
