@@ -2,7 +2,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Story from '../components/Story';
-import UserSummaryView from '../components/UserSummaryView';
+import MemberSummaryView from '../components/MemberSummaryView';
 
 const propTypes = {
   story: PropTypes.object.isRequired
@@ -37,10 +37,12 @@ class StoryView extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
+    const {story} = this.props;
+    const currentIssue = story.issues.find(i => i.id === story.index);
     return (
       <div className="StoryView">
-        <UserSummaryView userSummary={this.props.story.userSummary} />
-        {this.renderStories(this.props.story.stories)}
+        <MemberSummaryView memberSummary={story.memberSummary} />
+        {this.renderStories(currentIssue.children)}
       </div>
     );
   }

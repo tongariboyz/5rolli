@@ -31,15 +31,18 @@ class App extends React.Component {
    * @return {ReactElement}
    */
   render(): React.Element {
-    return (
-      <div className="Wrapper">
-        <Header />
-        <div className="Main">
-          <IssueListView />
-          <StoryView />
+    if (this.props.story.isInitialised) {
+      return (
+        <div className="Wrapper">
+          <Header />
+          <div className="Main">
+            <IssueListView />
+            <StoryView />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    return <div>loading</div>;
   }
 }
 

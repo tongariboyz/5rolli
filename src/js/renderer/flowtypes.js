@@ -53,6 +53,13 @@ export type Issue = {
   title: string,
   type: typeof STORY_TYPE.issue,
   status: StoryStatus,
+  summary: {
+    current: number,
+    past: number,
+    open: number,
+    close: number,
+    wait: number
+  },
   dependIds: number[],
   members: Member[],
   children: Story[],

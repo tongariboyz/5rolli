@@ -1,14 +1,14 @@
-.UserSummaryView
+.MemberSummaryView
   border(0 0 1px 0, solid, $gray100)
   display: flex
   margin: 0 24px
   padding: 24px 0
 
-.UserSummary
+.MemberSummary
   display: flex
   padding: 4px
   flex: 1
-  &__user
+  &__member
     size(32px)
     padding: 0 8px 0 0
     &__thumb
@@ -22,10 +22,10 @@
       typo(13px, $brown800, 400)
       p
         margin: 0
-      &__result, &__es50, &__es90
+      &__spent, &__es50, &__es90
         padding: 0 4px
         position: relative
-      &__result
+      &__spent
         font-weight: 700
       &__es50::before
         pos(absolute, -14px, 4px)

@@ -11,7 +11,7 @@ export default class Story extends React.Component {
   /**
    * render Member List
    *
-   * @return {ReactElement}
+   * @return {ReactElement|null}
    */
   renderMemberList():React.Element {
     const ml = nbem();
@@ -24,11 +24,14 @@ export default class Story extends React.Component {
         >
           <img
             className={ml('&&thumb')}
-            src={m.imagePath}
+            src={m.avatarUrl}
           />
         </div>
       );
     });
+    if (members.length === 0) {
+      return null;
+    }
     return <div className={ml('MemberList')}>{members}</div>;
   }
 
@@ -42,18 +45,24 @@ export default class Story extends React.Component {
     const s = nbem();
     return (
       <div className="StoryWrapper">
-        <div className={`${s('Story')} is-${story.sprintStatus} is-${story.storyStatus}`}>
+        <div className={`${s('Story')} is-${story.sprintStatus} is-${story.status}`}>
           <div className={s('&status')}>
-            <p className={s('&&label')}>{story.storyStatus.toUpperCase()}</p>
+            <p className={s('&&label')}>{story.status.toUpperCase()}</p>
           </div>
           <div className={s('&content')}>
             <div className={s('&&data')}>
               {this.renderMemberList(s)}
               <div className={s('&&&listName')}>
-                <p>{story.listName}</p>
+                <p>{story.card.listName}</p>
               </div>
               <div className={s('&&&time')}>
-                <p>{`${story.time.result} / ${story.time.val50} / ${story.time.val90}`}</p>
+                <p>
+                  <span>{story.time.spent ? story.time.spent : 0}</span>
+                  /
+                  <span>{story.time.es50}</span>
+                  /
+                  <span>{story.time.es90}</span>
+                </p>
               </div>
             </div>
             <div className={s('&&title')}>

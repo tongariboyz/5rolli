@@ -1,9 +1,10 @@
 .Issue
-  size(100%, auto)
+  border-radius(0 2px 2px 0)
+  size(98%, auto)
   background: $gray100
   box-sizing: border-box
-  margin: 2px 0
-  padding: 12px 16px
+  margin: 3px 0
+  padding: 16px
   &:first-child
     margin-top: 0
   &__title
@@ -29,3 +30,19 @@
       color: $orange500
     &__wait
       color: $gray300
+
+.Issue--isActive
+  @extend .Issue
+  border-radius(0)
+  background: #fff !important
+  width: 100%
+
+.Issue--isClosed
+  @extend .Issue
+  background: $orange500
+  cursor: pointer
+  &:hover
+    opacity(.92)
+  &__title
+    color: #fff
+    font-weight: 300

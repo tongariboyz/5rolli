@@ -6,7 +6,9 @@ import type {Action, Issue, Story, StoryNode, InvalidStory, MemberSummary} from 
 
 type State = {
   client: ?StoryClient,
+  index: string,
   isConnecting: boolean,
+  isInitialised: boolean,
   invalids: InvalidStory[],
   issues: Issue[],
   memberSummary: MemberSummary[]
@@ -76,11 +78,15 @@ export function createStoryTree(flatStories: StoryNode[]): {
 export default function story(state: State = {
   client: null,
   isConnecting: false,
+  isInitialised: false,
   issues: [],
   invalids: [],
+  index: '0',
   memberSummary: []
 }, action: Action): State {
   switch (action.type) {
+  case actionTypes.CHANGE_INDEX:
+    return Object.assign({}, state, action.payload);
   case actionTypes.LOGIN:
     return Object.assign({}, state, {
       client: action.payload
@@ -93,9 +99,12 @@ export default function story(state: State = {
     if (action.error) {
       return Object.assign({}, state, {client: null, isConnecting: false});
     }
+    const ret = createStoryTree(((action.payload: any): StoryNode[]));
     return Object.assign({}, state, {
-      isConnecting: false
-    }, createStoryTree(((action.payload: any): StoryNode[])));
+      isConnecting: false,
+      isInitialised: true,
+      index: ret.issues && ret.issues[0].id.toString()
+    }, ret);
   default:
     break;
   }

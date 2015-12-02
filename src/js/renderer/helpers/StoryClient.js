@@ -6,7 +6,7 @@ import request from 'superagent';
 import {STORY_TYPE, STORY_STATUS} from '../constants/story';
 import type {StoryNode, Sprint} from '../flowtypes';
 
-const NAME_BASE_REGEX = /^(\d+):\s+(?:\((?:(\d+)\/)?(\d+)\/(\d+)\)\s+)(.*)$/;
+const NAME_BASE_REGEX = /^(\d+):\s+(?:\((?:(\d+)\/)?(\d+)\/(\d+)\)\s+)?(.*)$/;
 const API_ENDPOINT = 'https://api.trello.com';
 const AVATAR_ENDPOINT = 'https://trello-avatars.s3.amazonaws.com';
 
@@ -72,6 +72,13 @@ export default class StoryClient {
       });
     }
     return Object.assign({}, baseStory, {
+      summary: {
+        current: 0,
+        past: 0,
+        open: 0,
+        close: 0,
+        wait: 0
+      },
       type: STORY_TYPE.issue
     });
   }
@@ -117,7 +124,7 @@ export default class StoryClient {
     const list = board.lists.find(l => l.id === card.idList);
     const override = {
       members,
-      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : story.status,
+      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : STORY_STATUS.close,
       card: {
         labels,
         url: card.shortUrl,
