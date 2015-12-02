@@ -5,6 +5,18 @@ import ipcTypes from '../../common/ipcTypes';
 import ipc from '../helpers/ipc';
 import type {Action} from '../flowtypes';
 
+/**
+ * Index を変更する
+ *
+ * @param {string} index current issue id
+ * @return {Object}
+ */
+export function changeIndex(index: string): Action {
+  return {
+    type: types.CHANGE_INDEX,
+    payload: {index}
+  };
+}
 
 /**
  * ストーリー一覧の取得
