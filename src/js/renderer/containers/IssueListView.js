@@ -18,6 +18,7 @@ class IssueListView extends React.Component {
     return this.props.story.issues.map((issue, key) => {
       return (
         <Issue
+          index={this.props.story.index}
           issue={issue}
           key={key}
         />
