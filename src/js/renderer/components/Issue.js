@@ -4,7 +4,8 @@ import nbem from 'nbem';
 
 const propTypes = {
   index: PropTypes.string.isRequired,
-  issue: PropTypes.object.isRequired
+  issue: PropTypes.object.isRequired,
+  onChangeIndex: PropTypes.func.isRequired
 };
 
 
@@ -37,7 +38,10 @@ export default class Issue extends React.Component {
     const i = nbem();
     const {current, past, open, close, wait} = this.props.issue.summary;
     return (
-      <div className={i(this.getRootClassName())}>
+      <div
+        className={i(this.getRootClassName())}
+        onClick={() => this.props.onChangeIndex(this.props.issue.id)}
+      >
         <p className={i('&title')}>{this.props.issue.title}</p>
         <p className={i('&summary')}>
           {current > 0 && <span className={i('&&current')}>{current}</span>}

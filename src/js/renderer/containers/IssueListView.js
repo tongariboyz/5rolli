@@ -1,9 +1,13 @@
 /* @flow */
 import React, {PropTypes} from 'react';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
 import Issue from '../components/Issue';
+import * as actionCreators from '../actions/story';
 
 const propTypes = {
+  actions: PropTypes.object.isRequired,
   story: PropTypes.object.isRequired
 };
 
@@ -15,12 +19,14 @@ class IssueListView extends React.Component {
    * @return {ReactElement[]}
    */
   renderIssues(): React.Element {
-    return this.props.story.issues.map((issue, key) => {
+    const {actions, story} = this.props;
+    return story.issues.map((issue, key) => {
       return (
         <Issue
-          index={this.props.story.index}
+          index={story.index}
           issue={issue}
           key={key}
+          onChangeIndex={actions.changeIndex}
         />
       );
     });
@@ -46,5 +52,15 @@ function mapStateToProps(state) {
   return {story: state.story};
 }
 
+/**
+ * action を整形
+ *
+ * @param {Function} dispatch dispatch
+ * @return {Object}
+ */
+function mapDispatchToProps(dispatch) {
+  return {actions: bindActionCreators(actionCreators, dispatch)};
+}
+
 IssueListView.propTypes = propTypes;
-export default connect(mapStateToProps)(IssueListView);
+export default connect(mapStateToProps, mapDispatchToProps)(IssueListView);
