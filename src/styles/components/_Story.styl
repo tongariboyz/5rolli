@@ -2,7 +2,6 @@
   size(100%, auto)
   box-sizing: border-box
 
-
 .Story
   size(100%, auto)
   box-sizing: border-box
@@ -13,38 +12,40 @@
     background: $gray50
   &:active
     background: $gray100
-  &.is-open
-    &.is-current
+  &.isOpen
+    &.isCurrent
       .Story__status
         border-color: $aqua500
-    &.is-past
+    &.isPast
       .Story__status
         border-color: $orange500
     .Story__status
       background: $brown800
       color: #fff
-  &.is-close
+  &.isClose
     .Story__status
       background: $orange500
       color: #fff
     .Story__content__title
       color: $orange500
-  &.is-wait
-    &.is-current, &.is-past
+  &.isWaiting
+    &.isCurrent, &.isPast
       .Story__status
         border(3px, solid, null, 8px)
         margin: 0
-    &.is-current
+    &.isCurrent
       .Story__status
         border-color: $aqua500
-    &.is-past
+    &.isPast
       .Story__status
         border-color: $orange500
     .Story__status
-      border(1px, solid, $brown100, 4px)
+      border(1px, solid, $gray100, 4px)
       background: #fff
-      color: $brown100
       margin: 2px
+      &__label
+        color: $brown100
+        font-weight: 200
     .Story__content
       .MemberList
         opacity(.24)

@@ -35,6 +35,25 @@
   background: #fff !important
   width: 100%
 
+.Issue--isOpen
+  @extend .Issue
+  cursor: pointer
+  &:hover
+    opacity(.92)
+
+.Issue--isWaiting
+  @extend .Issue
+  background: lighten($brown800, 4%)
+  cursor: pointer
+  &:hover
+    opacity(.92)
+  &__title
+    color: $brown500
+  &__summary
+    &__waiting
+      color: $brown500
+
+
 .Issue--isClosed
   @extend .Issue
   background: $orange500
