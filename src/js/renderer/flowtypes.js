@@ -58,7 +58,7 @@ export type Issue = {
     past: number,
     open: number,
     close: number,
-    wait: number
+    waiting: number
   },
   dependIds: number[],
   members: Member[],
