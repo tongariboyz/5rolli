@@ -31,7 +31,7 @@ type State = {
  * @param {Story|Issue} _story story
  * @return {IssueSummary}
  */
-function margeIssueSummary(summary: IssueSummary, _story: Story|Issue): IssueSummary {
+function updateIssueSummary(summary: IssueSummary, _story: Story|Issue): IssueSummary {
   const s = Object.assign({}, summary);
   if (_story.status === STORY_STATUS.open) {
     s.open += 1;
@@ -67,9 +67,9 @@ function parseStoryChildren(parent: Story|Issue, childMap: {[key: number]: Story
   const children = stories.map(child => {
     const ret = parseStoryChildren(child, childMap);
     if (ret[0].children.length > 0) {
-      summary = margeIssueSummary(ret[1], ret[0]);
+      summary = updateIssueSummary(ret[1], ret[0]);
     } else {
-      summary = margeIssueSummary(summary, ret[0]);
+      summary = updateIssueSummary(summary, ret[0]);
     }
     return ret[0];
   });
@@ -83,7 +83,7 @@ function parseStoryChildren(parent: Story|Issue, childMap: {[key: number]: Story
  * @param {StoryNode[]} rawFlatStories story リスト
  * @return {StoryNode[]}
  */
-function appendStatus(rawFlatStories: StoryNode[]): StoryNode[] {
+function updateStatus(rawFlatStories: StoryNode[]): StoryNode[] {
   return rawFlatStories.map(s => {
     if (s.type === STORY_TYPE.invalid) {
       return s;
@@ -126,7 +126,7 @@ export function createStoryTree(rawFlatStories: StoryNode[]): {
   const issues: Issue[] = [];
   const invalids: InvalidStory[] = [];
   const storyMap: {[key: number]: Story[]} = {};
-  const flatStories = appendStatus(rawFlatStories);
+  const flatStories = updateStatus(rawFlatStories);
 
   flatStories.sort((a, b) => {
     return a.card.pos - b.card.pos;
