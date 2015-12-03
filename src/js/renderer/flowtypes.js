@@ -25,6 +25,14 @@ export type InvalidStory = {
   }
 };
 
+export type IssueSummary = {
+  close: number,
+  current: number,
+  open: number,
+  past: number,
+  waiting: number
+}
+
 export type Story = {
   id: number,
   title: string,
