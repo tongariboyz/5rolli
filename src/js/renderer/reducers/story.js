@@ -1,8 +1,17 @@
 /* @flow */
+import moment from 'moment';
 import StoryClient from '../helpers/StoryClient';
-import {STORY_TYPE} from '../constants/story';
+import {CURRENT_DAYS, STORY_TYPE, STORY_STATUS} from '../constants/story';
 import actionTypes from '../constants/storyActionTypes';
-import type {Action, Issue, Story, StoryNode, InvalidStory, MemberSummary} from '../flowtypes';
+import type {
+  Action,
+  Issue,
+  IssueSummary,
+  Story,
+  StoryNode,
+  InvalidStory,
+  MemberSummary
+} from '../flowtypes';
 
 type State = {
   client: ?StoryClient,
@@ -16,34 +25,109 @@ type State = {
 
 
 /**
+ * Issue の summary 情報を渡ってきた Story で更新して返す
+ *
+ * @param {IssueSummary} summary summary
+ * @param {Story|Issue} _story story
+ * @return {IssueSummary}
+ */
+function margeIssueSummary(summary: IssueSummary, _story: Story|Issue): IssueSummary {
+  const s = Object.assign({}, summary);
+  if (_story.status === STORY_STATUS.open) {
+    s.open += 1;
+  } else if (_story.status === STORY_STATUS.waiting) {
+    s.waiting += 1;
+  } else {
+    s.close += 1;
+  }
+  if (_story.sprint) {
+    const diffDays = moment().diff(moment(_story.sprint.due), 'd');
+    if (_story.status !== STORY_STATUS.close) {
+      if (diffDays <= CURRENT_DAYS && diffDays >= 0) {
+        s.current += 1;
+      } else if (diffDays > 0) {
+        s.past += 1;
+      }
+    }
+  }
+  return s;
+}
+
+
+/**
  * Story, Issueにchildrenツリーを付与して返す
  *
  * @param {Object} parent Story or Issue
  * @param {Object} childMap parentIdをキーとしたStoryリスト
- * @return {Object}
+ * @return {Object} child Story
+ * @return {Object} summary
  */
 function parseStoryChildren(parent: Story|Issue, childMap: {[key: number]: Story[]}) {
   const stories = childMap[parent.id] || [];
+  let summary = {close: 0, current: 0, open: 0, past: 0, waiting: 0};
   const children = stories.map(child => {
-    return parseStoryChildren(child, childMap);
+    const ret = parseStoryChildren(child, childMap);
+    if (ret[0].children.length > 0) {
+      summary = margeIssueSummary(ret[1], ret[0]);
+    } else {
+      summary = margeIssueSummary(summary, ret[0]);
+    }
+    return ret[0];
   });
-  return Object.assign({}, parent, {children});
+  return [Object.assign({}, parent, {children}), summary];
+}
+
+
+/**
+ * Story の依存関係から status を変更する
+ *
+ * @param {StoryNode[]} rawFlatStories story リスト
+ * @return {StoryNode[]}
+ */
+function appendStatus(rawFlatStories: StoryNode[]): StoryNode[] {
+  return rawFlatStories.map(s => {
+    if (s.type === STORY_TYPE.invalid) {
+      return s;
+    }
+    const _s = ((s: any): Story | Issue);
+    if (_s.dependIds.length !== 0) {
+      const wait = _s.dependIds.every(id => {
+        const dependStory = rawFlatStories.find(ds => ds.id && ds.id === id);
+        return dependStory.status && dependStory.status !== STORY_STATUS.open;
+      });
+      if (!wait) {
+        return Object.assign({}, _s, {status: 'waiting'});
+      }
+    }
+    return _s;
+  }).map((s, index, arr) => {
+    if (s.type !== STORY_TYPE.story) {
+      return s;
+    }
+    const _s = ((s: any): Story);
+    const parentStory = arr.find(ps => ps.id && ps.id === _s.parentId);
+    if (parentStory.status === STORY_STATUS.waiting) {
+      return Object.assign({}, _s, {status: 'waiting'});
+    }
+    return _s;
+  });
 }
 
 
 /**
  * Story
  *
- * @param {Object[]} flatStories storyリスト
+ * @param {Object[]} rawFlatStories storyリスト
  * @return {Object[]}
  */
-export function createStoryTree(flatStories: StoryNode[]): {
+export function createStoryTree(rawFlatStories: StoryNode[]): {
   issues: Issue[],
   invalids: InvalidStory[]
 } {
   const issues: Issue[] = [];
   const invalids: InvalidStory[] = [];
   const storyMap: {[key: number]: Story[]} = {};
+  const flatStories = appendStatus(rawFlatStories);
 
   flatStories.sort((a, b) => {
     return a.card.pos - b.card.pos;
@@ -63,7 +147,8 @@ export function createStoryTree(flatStories: StoryNode[]): {
   return {
     invalids,
     issues: issues.map(issue => {
-      return parseStoryChildren(issue, storyMap);
+      const ret = parseStoryChildren(issue, storyMap);
+      return Object.assign({}, ret[0], {summary: ret[1]});
     })};
 }
 
