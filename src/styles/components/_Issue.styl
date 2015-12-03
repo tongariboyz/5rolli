@@ -23,19 +23,36 @@
     &__past
       background: $orange500
       margin: 0 12px 0 0
-    &__open, &__close, &__wait
+    &__open, &__close, &__waiting
       typo(11px, $brown800, 16px)
       padding: 0 12px 0 0
     &__close
       color: $orange500
-    &__wait
-      color: $gray300
 
 .Issue--isActive
   @extend .Issue
   border-radius(0)
   background: #fff !important
   width: 100%
+
+.Issue--isOpen
+  @extend .Issue
+  cursor: pointer
+  &:hover
+    opacity(.92)
+
+.Issue--isWaiting
+  @extend .Issue
+  background: lighten($brown800, 4%)
+  cursor: pointer
+  &:hover
+    opacity(.92)
+  &__title
+    color: $brown500
+  &__summary
+    &__waiting
+      color: $brown500
+
 
 .Issue--isClosed
   @extend .Issue

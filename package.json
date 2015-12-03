@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "dacho": "^1.0.0",
+    "moment": "^2.10.6",
     "nbem": "^0.1.1",
     "normalize.css": "^3.0.3",
     "os-homedir": "^1.0.1",

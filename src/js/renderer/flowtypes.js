@@ -25,6 +25,14 @@ export type InvalidStory = {
   }
 };
 
+export type IssueSummary = {
+  close: number,
+  current: number,
+  open: number,
+  past: number,
+  waiting: number
+}
+
 export type Story = {
   id: number,
   title: string,
@@ -58,7 +66,7 @@ export type Issue = {
     past: number,
     open: number,
     close: number,
-    wait: number
+    waiting: number
   },
   dependIds: number[],
   members: Member[],

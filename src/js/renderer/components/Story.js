@@ -1,6 +1,8 @@
 /* @flow */
 import React, {PropTypes} from 'react';
+import moment from 'moment';
 import nbem from 'nbem';
+import {CURRENT_DAYS} from '../constants/story';
 
 const propTypes = {
   story: PropTypes.object.isRequired
@@ -8,6 +10,34 @@ const propTypes = {
 
 
 export default class Story extends React.Component {
+  /**
+   * SprintStatus を返す
+   *
+   * @param {Object} sprint sprint object
+   * @return {string}
+   */
+  getSprintStatus(sprint: Object): string {
+    if (sprint) {
+      const diffDays = moment().diff(moment(sprint.due), 'd');
+      if (diffDays <= CURRENT_DAYS && diffDays >= 0) {
+        return 'isCurrent';
+      } else if (diffDays > 0) {
+        return 'isPast';
+      }
+    }
+    return 'isFuture';
+  }
+
+  /**
+   * StoryStatus を整形して返す
+   *
+   * @param {string} status story status
+   * @return {string}
+   */
+  getStoryStatus(status: string): string {
+    return `is${status.charAt(0).toUpperCase() + status.substring(1)}`;
+  }
+
   /**
    * render Member List
    *
@@ -45,7 +75,7 @@ export default class Story extends React.Component {
     const s = nbem();
     return (
       <div className="StoryWrapper">
-        <div className={`${s('Story')} is-${story.sprintStatus} is-${story.status}`}>
+        <div className={`${s('Story')} ${this.getSprintStatus(story.sprint)} ${this.getStoryStatus(story.status)}`}>
           <div className={s('&status')}>
             <p className={s('&&label')}>{story.status.toUpperCase()}</p>
           </div>
