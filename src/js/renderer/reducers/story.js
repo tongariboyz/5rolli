@@ -6,7 +6,7 @@ import type {Action, Issue, Story, StoryNode, InvalidStory, MemberSummary} from 
 
 type State = {
   client: ?StoryClient,
-  index: string,
+  index: number,
   isConnecting: boolean,
   isInitialised: boolean,
   invalids: InvalidStory[],
@@ -81,7 +81,7 @@ export default function story(state: State = {
   isInitialised: false,
   issues: [],
   invalids: [],
-  index: '0',
+  index: 0,
   memberSummary: []
 }, action: Action): State {
   switch (action.type) {
@@ -103,7 +103,7 @@ export default function story(state: State = {
     return Object.assign({}, state, {
       isConnecting: false,
       isInitialised: true,
-      index: ret.issues && ret.issues[0].id.toString()
+      index: ret.issues && ret.issues[0].id
     }, ret);
   default:
     break;

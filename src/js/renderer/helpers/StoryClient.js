@@ -56,7 +56,7 @@ export default class StoryClient {
     const dependsMatch = body.match(/\s+&(\d+)/g);
     const parentId = parentMatch && parseInt(parentMatch[1], 10);
     const baseStory = {
-      id,
+      id: parseInt(id, 10),
       title: body.replace(/(\s+#(\d+))|(\s+&(\d+))/g, '').trim(),
       dependIds: dependsMatch ? dependsMatch.map(m => parseInt(/\d+/.exec(m)[0], 10)) : []
     };

@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import nbem from 'nbem';
 
 const propTypes = {
-  index: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   issue: PropTypes.object.isRequired,
   onChangeIndex: PropTypes.func.isRequired
 };
