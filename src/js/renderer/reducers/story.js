@@ -59,8 +59,7 @@ function margeIssueSummary(summary: IssueSummary, _story: Story|Issue): IssueSum
  *
  * @param {Object} parent Story or Issue
  * @param {Object} childMap parentIdをキーとしたStoryリスト
- * @return {Object} child Story
- * @return {Object} summary
+ * @return {array} child Story, summary
  */
 function parseStoryChildren(parent: Story|Issue, childMap: {[key: number]: Story[]}) {
   const stories = childMap[parent.id] || [];
