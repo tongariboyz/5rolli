@@ -96,7 +96,7 @@ function appendStatus(rawFlatStories: StoryNode[]): StoryNode[] {
         return dependStory.status && dependStory.status !== STORY_STATUS.open;
       });
       if (!wait) {
-        return Object.assign({}, _s, {status: 'waiting'});
+        return Object.assign({}, _s, {status: STORY_STATUS.waiting});
       }
     }
     return _s;
@@ -107,7 +107,7 @@ function appendStatus(rawFlatStories: StoryNode[]): StoryNode[] {
     const _s = ((s: any): Story);
     const parentStory = arr.find(ps => ps.id && ps.id === _s.parentId);
     if (parentStory.status === STORY_STATUS.waiting) {
-      return Object.assign({}, _s, {status: 'waiting'});
+      return Object.assign({}, _s, {status: STORY_STATUS.waiting});
     }
     return _s;
   });
