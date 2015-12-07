@@ -18,10 +18,10 @@ export default class Story extends React.Component {
    */
   getSprintStatus(sprint: Object): string {
     if (sprint) {
-      const diffDays = moment().diff(moment(sprint.due), 'd');
-      if (diffDays <= CURRENT_DAYS && diffDays >= 0) {
+      const diffDays = moment(sprint.due).diff(moment(), 'd');
+      if (diffDays < CURRENT_DAYS && diffDays >= 0) {
         return 'isCurrent';
-      } else if (diffDays > 0) {
+      } else if (diffDays < 0) {
         return 'isPast';
       }
     }
