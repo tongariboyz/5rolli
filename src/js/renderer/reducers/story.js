@@ -7,6 +7,7 @@ import type {
   Action,
   Issue,
   IssueSummary,
+  Sprint,
   Story,
   StoryNode,
   InvalidStory,
@@ -40,12 +41,14 @@ function updateIssueSummary(summary: IssueSummary, _story: Story|Issue): IssueSu
   } else {
     s.close += 1;
   }
-  if (_story.sprint) {
-    const diffDays = moment().diff(moment(_story.sprint.due), 'd');
-    if (_story.status !== STORY_STATUS.close) {
-      if (diffDays <= CURRENT_DAYS && diffDays >= 0) {
+  const _s = ((_story: any): Story);
+  const sprint = ((_s.sprint: any): Sprint);
+  if (sprint) {
+    const diffDays = moment(sprint.due).diff(moment(), 'd');
+    if (_s.status !== STORY_STATUS.close) {
+      if (diffDays < CURRENT_DAYS && diffDays >= 0) {
         s.current += 1;
-      } else if (diffDays > 0) {
+      } else if (diffDays < 0) {
         s.past += 1;
       }
     }
