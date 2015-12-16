@@ -73,6 +73,7 @@
     "build:css": "stylus -c src/styles/base.styl --include-css -I node_modules -o dist/bundle.css -m --sourcemap-root stylus",
     "build:fonts": "cpx \"src/fonts/**/{*.eot,*.svg,*.ttf,*.woff}\" dist/fonts",
     "build:images": "cpx \"src/images/**/{*.svg,*.gif,*.png,*.jpg}\" dist/images",
+    "build:jade": "jade src --out dist",
     "build:js-main": "browserify -t babelify src/js/main/main.js --im --no-detect-globals --node -d | exorcist ./dist/main.js.map > ./dist/main.js",
     "build:js-renderer": "browserify -t babelify src/js/renderer/app.js -d | exorcist ./dist/bundle.js.map > ./dist/bundle.js",
     "codecov": "cat coverage/lcov.info | codecov",
