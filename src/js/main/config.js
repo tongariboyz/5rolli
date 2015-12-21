@@ -6,8 +6,8 @@ import osHomedir from 'os-homedir';
 
 const configFilePath: string = path.join(osHomedir(), '.5rolli.json');
 const defaultConfig = {
-  apiToken: '',
   apiKey: '',
+  apiToken: '',
   boardUrl: ''
 };
 

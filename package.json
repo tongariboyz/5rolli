@@ -42,6 +42,7 @@
     "eslint": "^1.10.3",
     "eslint-config-kanmu": "^9.0.0",
     "eslint-plugin-react": "^3.11.3",
+    "eslint-plugin-sorting": "0.0.1",
     "exorcist": "^0.4.0",
     "flow-bin": "^0.20.0",
     "gh-pages": "^0.8.0",

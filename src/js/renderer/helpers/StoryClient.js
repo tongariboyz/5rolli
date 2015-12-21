@@ -56,27 +56,27 @@ export default class StoryClient {
     const dependsMatch = body.match(/\s+&(\d+)/g);
     const parentId = parentMatch && parseInt(parentMatch[1], 10);
     const baseStory = {
+      dependIds: dependsMatch ? dependsMatch.map(m => parseInt(/\d+/.exec(m)[0], 10)) : [],
       id: parseInt(id, 10),
-      title: body.replace(/(\s+#(\d+))|(\s+&(\d+))/g, '').trim(),
-      dependIds: dependsMatch ? dependsMatch.map(m => parseInt(/\d+/.exec(m)[0], 10)) : []
+      title: body.replace(/(\s+#(\d+))|(\s+&(\d+))/g, '').trim()
     };
     if (parentId) {
       return Object.assign({}, baseStory, {
         parentId,
-        type: STORY_TYPE.story,
         time: {
-          spent: spent ? parseInt(spent, 10) : null,
           es50: es50 ? parseInt(es50, 10) : null,
-          es90: es90 ? parseInt(es90, 10) : null
-        }
+          es90: es90 ? parseInt(es90, 10) : null,
+          spent: spent ? parseInt(spent, 10) : null
+        },
+        type: STORY_TYPE.story
       });
     }
     return Object.assign({}, baseStory, {
       summary: {
-        current: 0,
-        past: 0,
-        open: 0,
         close: 0,
+        current: 0,
+        open: 0,
+        past: 0,
         waiting: 0
       },
       type: STORY_TYPE.issue
@@ -96,8 +96,8 @@ export default class StoryClient {
     }
     const [year, month, day] = sprintMatches.slice(1).map(s => parseInt(s, 10));
     return {
-      name,
-      due: new Date(year, month - 1, day)
+      due: new Date(year, month - 1, day),
+      name
     };
   }
 
@@ -117,20 +117,20 @@ export default class StoryClient {
         return null;
       }
       return {
-        username: member.username,
-        avatarUrl: member.avatarHash && `${AVATAR_ENDPOINT}/${member.avatarHash}/30.png`
+        avatarUrl: member.avatarHash && `${AVATAR_ENDPOINT}/${member.avatarHash}/30.png`,
+        username: member.username
       };
     }).filter(m => m);
     const list = board.lists.find(l => l.id === card.idList);
     const override = {
-      members,
-      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : STORY_STATUS.close,
       card: {
         labels,
-        url: card.shortUrl,
         listName: list.name,
-        pos: card.pos
-      }
+        pos: card.pos,
+        url: card.shortUrl
+      },
+      members,
+      status: labels.indexOf(STORY_STATUS.open) >= 0 ? STORY_STATUS.open : STORY_STATUS.close
     };
     const sprint = this.parseListName(list.name);
     if (sprint) {
@@ -148,13 +148,13 @@ export default class StoryClient {
     return new Promise((resolve, reject) => {
       request.get(`${API_ENDPOINT}/1/boards/${this.boardId}`)
         .query({
-          cards: 'visible',
           card_fields: 'labels,name,shortUrl,pos,idList,idMembers',
+          cards: 'visible',
+          key: this.apiKey,
           lists: 'open',
-          members: 'all',
           member_fields: 'username,avatarHash',
-          token: this.apiToken,
-          key: this.apiKey
+          members: 'all',
+          token: this.apiToken
         })
         .end((err, res) => {
           if (err) {

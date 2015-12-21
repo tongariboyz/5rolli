@@ -164,11 +164,11 @@ export function createStoryTree(rawFlatStories: StoryNode[]): {
  */
 export default function story(state: State = {
   client: null,
+  index: 0,
+  invalids: [],
   isConnecting: false,
   isInitialised: false,
   issues: [],
-  invalids: [],
-  index: 0,
   memberSummary: []
 }, action: Action): State {
   switch (action.type) {
@@ -188,9 +188,9 @@ export default function story(state: State = {
     }
     const ret = createStoryTree(((action.payload: any): StoryNode[]));
     return Object.assign({}, state, {
+      index: ret.issues && ret.issues[0].id,
       isConnecting: false,
-      isInitialised: true,
-      index: ret.issues && ret.issues[0].id
+      isInitialised: true
     }, ret);
   default:
     break;
