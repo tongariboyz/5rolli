@@ -16,11 +16,17 @@ SHINCHOKU Viewer
 npm install
 ```
 
-## Development
 
+## Development
 
 1. `npm start`
 2. `npm run app`
+
+
+## Release
+
+1. `npm run release`
+2. `open build/bin`
 
 
 [travis-url]: https://travis-ci.org/tongariboyz/5rolli
