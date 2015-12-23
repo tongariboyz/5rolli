@@ -18,7 +18,7 @@
     "redux": "^3.0.4",
     "redux-actions": "^0.9.0",
     "redux-promise": "^0.5.0",
-    "redux-thunk": "^1.0.0",
+    "redux-thunk": "^1.0.2",
     "superagent": "^1.4.0",
     "zenigame": "0.0.2"
   },
