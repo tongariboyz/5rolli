@@ -16,6 +16,9 @@ CrashReporter.start();
  * メイン処理の実行
  */
 function run() {
+  // XXX: release用のnpm scriptsでuglifyjsによって
+  // globalのDEBUG変数は強制的にfalseに変更されてこの代入部分は削除される
+  global.DEBUG = true;
   // メイン画面のサイズ
   mainWindow = new BrowserWindow({width: 800, height: 600});
   // 起動 url を指定
@@ -23,7 +26,9 @@ function run() {
   mainWindow.loadUrl(`file://${filePath}`);
 
   // デベロッパーツールを表示
-  mainWindow.toggleDevTools();
+  if (DEBUG) {
+    mainWindow.toggleDevTools();
+  }
 
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on('closed', () => {
