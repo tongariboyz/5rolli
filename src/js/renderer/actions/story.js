@@ -13,8 +13,8 @@ import type {Action} from '../flowtypes';
  */
 export function changeIndex(index: string): Action {
   return {
-    type: types.CHANGE_INDEX,
-    payload: {index}
+    payload: {index},
+    type: types.CHANGE_INDEX
   };
 }
 
@@ -31,8 +31,8 @@ export function fetchStories(): Function {
     });
     const client = getState().story.client;
     return dispatch({
-      type: types.RECEIVE_STORIES,
-      payload: client.getStories()
+      payload: client.getStories(),
+      type: types.RECEIVE_STORIES
     });
   };
 }
@@ -50,8 +50,8 @@ export function login(apiToken: string, apiKey: string, boardUrl: string): Funct
   return dispatch => {
     const client = new StoryClient(apiToken, apiKey, boardUrl);
     dispatch({
-      type: types.LOGIN,
-      payload: client
+      payload: client,
+      type: types.LOGIN
     });
     return dispatch(fetchStories(client));
   };
@@ -67,8 +67,8 @@ export function login(apiToken: string, apiKey: string, boardUrl: string): Funct
 export function loadConfig(config: Object): Function {
   return dispatch => {
     dispatch({
-      type: types.LOAD_CONFIG,
-      payload: config
+      payload: config,
+      type: types.LOAD_CONFIG
     });
     const {apiToken, apiKey, boardUrl} = config;
     return dispatch(login(apiToken, apiKey, boardUrl));

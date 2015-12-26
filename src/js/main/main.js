@@ -20,7 +20,7 @@ function run() {
   // globalのDEBUG変数は強制的にfalseに変更されてこの代入部分は削除される
   global.DEBUG = true;
   // メイン画面のサイズ
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({height: 600, width: 800});
   // 起動 url を指定
   const filePath = path.join(__dirname, 'index.html');
   mainWindow.loadUrl(`file://${filePath}`);

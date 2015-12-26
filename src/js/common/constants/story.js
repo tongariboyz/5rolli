@@ -12,4 +12,3 @@ export const STORY_STATUS = {
   waiting: 'waiting'
 };
 
-export const CURRENT_DAYS = 7;
