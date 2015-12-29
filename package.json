@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "dacho": "^1.0.0",
+    "electron-window-state": "^2.0.0",
     "moment": "^2.10.6",
     "nbem": "^0.2.0",
     "normalize.css": "^3.0.3",

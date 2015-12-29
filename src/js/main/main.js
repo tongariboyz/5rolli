@@ -4,6 +4,7 @@ import app from 'app';
 import {ipcMain} from 'electron';
 import CrashReporter from 'crash-reporter';
 import BrowserWindow from 'browser-window';
+import windowStateKeeper from 'electron-window-state';
 
 import {loadConfig} from './config';
 import ipcTypes from '../common/ipcTypes';
@@ -19,8 +20,19 @@ function run() {
   // XXX: release用のnpm scriptsでuglifyjsによって
   // globalのDEBUG変数は強制的にfalseに変更されてこの代入部分は削除される
   global.DEBUG = true;
-  // メイン画面のサイズ
-  mainWindow = new BrowserWindow({height: 600, width: 800});
+
+  // メイン画面の生成
+  const mainWindowState = windowStateKeeper({
+    defaultHeight: 600, defaultWidth: 800
+  });
+  mainWindow = new BrowserWindow({
+    height: mainWindowState.height,
+    width: mainWindowState.width,
+    x: mainWindowState.x,
+    y: mainWindowState.y
+  });
+  mainWindowState.manage(mainWindow);
+
   // 起動 url を指定
   const filePath = path.join(__dirname, 'index.html');
   mainWindow.loadUrl(`file://${filePath}`);
