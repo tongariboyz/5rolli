@@ -1,7 +1,6 @@
 import path from 'path';
 
-import app from 'app';
-import {ipcMain} from 'electron';
+import {Menu, app, ipcMain} from 'electron';
 import CrashReporter from 'crash-reporter';
 import BrowserWindow from 'browser-window';
 
@@ -30,6 +29,8 @@ function run() {
     mainWindow.toggleDevTools();
   }
 
+  buildMenu();
+
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -43,6 +44,37 @@ function run() {
     });
   });
 }
+
+
+/**
+ * Building Menu
+ */
+function buildMenu() {
+  const name = app.getName();
+  const template = [{
+    label: name,
+    submenu: [{
+      label: `About ${name}`,
+      selector: 'orderFrontStandardAboutPanel:'
+    }, {
+      type: 'separator'
+    }, {
+      accelerator: 'Command+Q',
+      click: () => app.quit(),
+      label: 'Quit'
+    }]
+  }, {
+    label: 'View',
+    submenu: [{
+      accelerator: 'Command+R',
+      click: (item, focusedWindow) => focusedWindow && focusedWindow.reload(),
+      label: 'Reload'
+    }]
+  }];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 
 app.on('ready', () => run());
 app.on('window-all-closed', () => {
