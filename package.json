@@ -10,7 +10,7 @@
     "dacho": "^2.0.1",
     "electron-window-state": "^2.0.0",
     "moment": "^2.10.6",
-    "nbem": "^0.2.0",
+    "nbem": "^0.3.2",
     "normalize.css": "^3.0.3",
     "os-homedir": "^1.0.1",
     "react": "^0.14.6",
