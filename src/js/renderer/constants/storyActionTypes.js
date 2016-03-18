@@ -1,5 +1,5 @@
 /* @flow */
-import reaction from 'dacho';
+import {reaction} from 'dacho';
 
 /**
  * @type {Object}

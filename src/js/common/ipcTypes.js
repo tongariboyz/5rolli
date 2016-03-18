@@ -1,4 +1,4 @@
-import reaction from 'dacho';
+import {reaction} from 'dacho';
 
 
 export default reaction([
