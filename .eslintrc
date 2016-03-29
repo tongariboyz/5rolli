@@ -1,5 +1,7 @@
-extends: kanmu/react
+extends:
+  - kanmu
+  - kanmu/browser
+  - kanmu/node
+  - kanmu/react
+  - kanmu/flow
 parser: babel-eslint
-globals:
-  $Enum: true
-  ReactElement: true
