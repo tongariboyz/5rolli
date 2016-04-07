@@ -41,7 +41,7 @@
     "electron-prebuilt": "^0.37.2",
     "esdoc": "^0.4.3",
     "eslint": "^2.5.3",
-    "eslint-config-kanmu": "^10.0.0",
+    "eslint-config-kanmu": "^11.0.0",
     "eslint-plugin-react": "^4.0.0",
     "eslint-plugin-sorting": "0.0.1",
     "exorcist": "^0.4.0",
