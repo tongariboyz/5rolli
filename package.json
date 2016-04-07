@@ -13,7 +13,7 @@
     "nbem": "^0.3.2",
     "normalize.css": "^4.0.0",
     "os-homedir": "^1.0.1",
-    "react": "^0.14.6",
+    "react": "^15.0.0",
     "react-dom": "^0.14.7",
     "react-redux": "^4.0.3",
     "redux": "^3.0.4",
