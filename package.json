@@ -11,7 +11,7 @@
     "electron-window-state": "^3.0.3",
     "moment": "^2.10.6",
     "nbem": "^0.3.2",
-    "normalize.css": "^4.0.0",
+    "normalize.css": "^5.0.0",
     "os-homedir": "^1.0.1",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
