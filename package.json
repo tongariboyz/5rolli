@@ -56,7 +56,7 @@
     "power-assert": "^1.2.0",
     "proxyquire": "^1.7.3",
     "stylus": "^0.54.2",
-    "uglify-js": "^2.6.1",
+    "uglify-js": "^3.0.0",
     "watchify": "^3.6.1"
   },
   "homepage": "https://github.com/tongariboyz/5rolli#readme",
